@@ -67,3 +67,64 @@ $color3 - the changed foreground/background
 |name|function|description|
 |----|--------|-----------|
 | Adaptive | color-scheme-adaptive($color, $color2, $color3) | will alter $color lightness based on the difference between $color2 and $color3 to maintain contrast |
+
+
+## example
+
+```scss
+@import "~sass-themer-color/index.scss";
+
+@include setColorThemePallet((
+    1: (
+        back: #805b58,
+        fore: #e8c046
+    ),
+    2: (
+        back: #E84E46,
+        fore: #000
+    ),
+    3: (
+        back: #FF0601,
+        fore: #000
+    ),
+    4: (
+        back: #E8AAAB,
+        fore: #000
+    ),
+    5: (
+        back: rgb(174, 5, 1),
+        fore: #fff
+    )
+));
+
+@include setColorThemeLabels((
+    highlight: 1,
+    menu: 1,
+    input: 2,
+    header: 3,
+    footer: 3,
+    body: 4,
+    overlay: 5,
+));
+
+header {
+    color: color-theme-fore(header);
+    background-color: color-theme-back(header);
+}
+
+footer {
+    color: color-theme-fore(footer);
+    background-color: color-theme-back(footer);
+}
+
+.overlay {
+    color: color-theme-fore(overlay);
+    background-color: color-theme-back(overlay);
+
+    .title {
+        color: color-theme-analogous(color-theme-fore(overlay), 0.5);
+        background-color: color-theme-analogous(color-theme-back(overlay), 0.5);
+    }
+}
+
+```
