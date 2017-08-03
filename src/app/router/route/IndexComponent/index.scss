@@ -1,0 +1,317 @@
+@import "~sass-themer-color/index.scss";
+
+@include setColorThemePallet((
+    1: (
+        back: #805b58,
+        fore: #e8c046
+    ),
+    2: (
+        back: #E84E46,
+        fore: #000
+    ),
+    3: (
+        back: #FF0601,
+        fore: #000
+    ),
+    4: (
+        back: #E8AAAB,
+        fore: #000
+    ),
+    5: (
+        back: rgb(174, 5, 1),
+        fore: #fff
+    )
+));
+
+$mylabels: (
+    one: 1,
+    two: 2,
+    base: 3,
+    four: 4,
+    five: 5,
+);
+
+@include setColorThemeLabels($mylabels);
+
+$test-settings: (
+    color1: -0.75,
+    color2: -0.5,
+    color3: -0.25,
+    color4: 0,
+    color5: 0.25,
+    color6: 0.5,
+    color7: 0.75,
+);
+
+.color-scaling {
+    width: 100%;
+}
+
+.pallet {
+    width: 100%;
+    height: 2.4vh;
+    min-height: 15px;
+
+    & > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:before {
+            font-family: arial, sans-serif, helvetica;
+            font-size: 2vw;
+        }
+    }
+}
+
+.pallet.base {
+    display:flex;
+    position:relative;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    height: 10vh;
+
+    & > div:before {
+        font-size: 3.2vw;
+    }
+
+    & > div {
+        width: calc(100% / 5);
+    }
+
+    .color1 {
+        background-color: color-theme-back(one);
+
+        &:before {
+            content: 'one';
+            color: color-theme-fore(one);
+        }
+    }
+    .color2 {
+        background-color: color-theme-back(two);
+
+        &:before {
+            content: 'two';
+            color: color-theme-fore(two);
+        }
+    }
+    .color3 {
+        background-color: color-theme-back(base);
+
+        &:before {
+            content: 'base';
+            color: color-theme-fore(base);
+        }
+    }
+    .color4 {
+        background-color: color-theme-back(four);
+
+        &:before {
+            content: 'four';
+            color: color-theme-fore(four);
+        }
+    }
+    .color5 {
+        background-color: color-theme-back(five);
+
+        &:before {
+            content: 'five';
+            color: color-theme-fore(five);
+        }
+    }
+}
+
+.pallet.analogous {
+    display:flex;
+    position:relative;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+
+    & > div {
+        width: calc(100% / 7);
+
+        &:before {
+            color: color-theme-fore(base);
+        }
+    }
+
+    @each $index, $item in $mylabels {
+        @each $test-name, $test-amt in $test-settings {
+            .#{$test-name}.#{$index} {
+                background-color: color-scheme-analogous(color-theme-back($index), $test-amt);
+
+                &:before {
+                    content: '#{$test-amt}';
+                    color: color-scheme-adaptive(color-theme-fore($index), color-theme-back($index), color-scheme-analogous(color-theme-back($index), $test-amt));
+                }
+            }
+        }
+    }
+}
+
+.pallet.shades {
+    display:flex;
+    position:relative;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+
+    & > div {
+        width: calc(100% / 7);
+
+        &:before {
+            color: color-theme-fore(base);
+        }
+    }
+
+    @each $index, $item in $mylabels {
+        @each $test-name, $test-amt in $test-settings {
+            .#{$test-name}.#{$index} {
+                background-color: color-scheme-shades(color-theme-back($index), $test-amt);
+
+                &:before {
+                    content: '#{$test-amt}';
+                    color: color-scheme-adaptive(
+                        color-theme-fore($index),
+                        color-theme-back($index),
+                        color-scheme-shades(color-theme-back($index), $test-amt)
+                    );
+                }
+            }
+        }
+    }
+}
+
+.pallet.monochromatic {
+    display:flex;
+    position:relative;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+
+    & > div {
+        width: calc(100% / 7);
+
+        &:before {
+            color: color-theme-fore(base);
+        }
+    }
+
+    @each $index, $item in $mylabels {
+        @each $test-name, $test-amt in $test-settings {
+            .#{$test-name}.#{$index} {
+                background-color: color-scheme-monochromatic(color-theme-back($index), $test-amt);
+
+                &:before {
+                    content: '#{$test-amt}';
+                    color: color-scheme-adaptive(
+                        color-theme-fore($index),
+                        color-theme-back($index),
+                        color-scheme-monochromatic(color-theme-back($index), $test-amt)
+                    );
+                }
+            }
+        }
+    }
+}
+
+.pallet.triad {
+    display:flex;
+    position:relative;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+
+    & > div {
+        width: calc(100% / 7);
+
+        &:before {
+            color: color-theme-fore(base);
+        }
+    }
+
+    @each $index, $item in $mylabels {
+        @each $test-name, $test-amt in $test-settings {
+            .#{$test-name}.#{$index} {
+                background-color: color-scheme-triad(color-theme-back($index), $test-amt);
+
+                &:before {
+                    content: '#{$test-amt}';
+                    color: color-scheme-adaptive(
+                        color-theme-fore($index),
+                        color-theme-back($index),
+                        color-scheme-triad(color-theme-back($index), $test-amt)
+                    );
+                }
+            }
+        }
+    }
+}
+
+.pallet.complementary {
+    display:flex;
+    position:relative;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+
+    & > div {
+        width: calc(100% / 7);
+
+        &:before {
+            color: color-theme-fore(base);
+        }
+    }
+
+    @each $index, $item in $mylabels {
+        @each $test-name, $test-amt in $test-settings {
+            .#{$test-name}.#{$index} {
+                background-color: color-scheme-complementary(color-theme-back($index), $test-amt);
+
+                &:before {
+                    content: '#{$test-amt}';
+                    color: color-scheme-adaptive(
+                        color-theme-fore($index),
+                        color-theme-back($index),
+                        color-scheme-complementary(color-theme-back($index), $test-amt)
+                    );
+                }
+            }
+        }
+    }
+}
+
+.pallet.compound {
+    display:flex;
+    position:relative;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+
+    & > div {
+        width: calc(100% / 7);
+
+        &:before {
+            color: color-theme-fore(base);
+        }
+    }
+
+    @each $index, $item in $mylabels {
+        @each $test-name, $test-amt in $test-settings {
+            .#{$test-name}.#{$index} {
+                background-color: color-scheme-compound(color-theme-back($index), $test-amt);
+
+                &:before {
+                    content: '#{$test-amt}';
+                    color: color-scheme-adaptive(
+                        color-theme-fore($index),
+                        color-theme-back($index),
+                        color-scheme-compound(color-theme-back($index), $test-amt)
+                    );
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,188 @@
+// color schemes
+// https://color.adobe.com/create/color-wheel
+$color-scheme-monochromatic-list: (
+    1: (
+        red: 127,
+        green: 127,
+        blue: 0
+    ),
+    2: (
+        red: 127,
+        green: 0,
+        blue: 0
+    ),
+    3: (
+        red: 127,
+        green: 127,
+        blue: 0
+    ),
+    4: (
+        red: 0,
+        green: 127,
+        blue: 0
+    ),
+    5: (
+        red: 0,
+        green: 127,
+        blue: 127
+    ),
+    6: (
+        red: 0,
+        green: 0,
+        blue: 127
+    ),
+    7: (
+        red: 127,
+        green: 0,
+        blue: 127
+    )
+);
+
+@function color-scheme-adaptive-percent($c1, $c2, $c3) {
+    $total1: red($c1) + green($c1) + blue($c1);
+    $total2: red($c2) + green($c2) + blue($c2);
+    $total3: red($c3) + green($c3) + blue($c3);
+    $percent: 0;
+
+    //$c1 is lighter
+    @if ($total1 > $total2) {
+        //new base ($total3) went darker
+        @if ($total2 > $total3) {
+            //darken $c1 by difference (neg)
+            $percent: ($total3 - $total2)  / 765 * 100;
+        }
+        //new base ($total3) went lighter
+        @elseif ($total2 < $total3) {
+            //lighten $c1 by difference (pos)
+            $percent: ($total3 - $total2)  / 765 * 100;
+        }
+    }
+    //$c1 is darker
+    @elseif ($total1 < $total2) {
+        //new base ($total3) went darker
+        @if ($total2 > $total3) {
+            //darken
+            $percent: ($total3 - $total2)  / 765 * 100;
+        }
+        //new base ($total3) went lighter
+        @elseif ($total2 < $total3) {
+            //lighten
+            $percent: ($total3 - $total2)  / 765 * 100;
+        }
+    }
+
+    //if the colors are too close in difference, swap brightness
+    @if (abs($total1 - $total3) < 127) {
+        @if ($percent > 0) {
+            $percent: (100 - $percent) * -1;
+        }
+        @else {
+            $percent: (100 - abs($percent));
+        }
+    }
+
+    @return $percent;
+}
+
+@function color-scheme-adaptive($c1, $c2, $c3) {
+    @return adjust-color($c1, $lightness: color-scheme-adaptive-percent($c1, $c2, $c3));
+}
+
+@function color-scheme-shades($c1, $scale) {
+    $c2: $c1;
+
+    @if ($scale > 0) {
+        $c2: #fff;
+    }
+
+    @if ($scale < 0) {
+        $c2: #000;
+    }
+
+    @return mix($c2, $c1, abs($scale) * 100);
+}
+
+@function color-scheme-analogous($c1, $scale) {
+    $amt: abs($scale) * 45;
+
+    @if ($scale > 0) {
+        @return change-color($c1, $hue: 0 + $amt);
+    }
+
+    @if ($scale < 0) {
+        @return change-color($c1, $hue: 360 - $amt);
+    }
+
+    @return $c1;
+}
+
+//needs work
+@function color-scheme-monochromatic($c1, $scale) {
+    $red: red($c1);
+    $green: green($c1);
+    $blue: blue($c1);
+    $match: 255;
+    $key: null;
+
+    @each $index, $item in $color-scheme-monochromatic-list {
+        $diff: abs($red - map-get($item, red)) + abs($green - map-get($item, green)) + abs($blue - map-get($item, blue));
+
+        @if ($diff < $match) {
+            $match: $diff;
+            $key: $item;
+        }
+    }
+
+    @if ($key == null) {
+        @return $c1;
+    }
+
+    @if ($scale > 0) {
+        @return mix(rgb(map-get($key, red) + 127, map-get($key, green) + 127, map-get($key, blue) + 127), $c1, abs($scale) * 100);
+    }
+    @elseif ($scale < 0) {
+        @return mix(rgb(map-get($key, red), map-get($key, green), map-get($key, blue)), $c1, abs($scale) * 100);
+    }
+
+    @return $c1;
+}
+
+@function color-scheme-triad($c1, $scale) {
+    $amt: abs($scale) * 90;
+
+    @if ($scale > 0) {
+        @return change-color($c1, $hue: 0 + $amt);
+    }
+
+    @if ($scale < 0) {
+        @return change-color($c1, $hue: 360 - $amt);
+    }
+
+    @return $c1;
+}
+
+@function color-scheme-complementary($c1, $scale) {
+    @if ($scale > 0) {
+        @return change-color($c1, $hue: 180, $lightness: (100 * $scale));
+    }
+
+    @if ($scale < 0) {
+        @return change-color($c1, $lightness: 100 - (100 * abs($scale)));
+    }
+
+    @return $c1;
+}
+
+@function color-scheme-compound($c1, $scale) {
+    $amt: abs($scale) * 180;
+
+    @if ($scale > 0) {
+        @return change-color($c1, $hue: 0 + $amt);
+    }
+
+    @if ($scale < 0) {
+        @return change-color($c1, $hue: 360 - $amt);
+    }
+
+    @return $c1;
+}

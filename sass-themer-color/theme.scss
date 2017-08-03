@@ -1,0 +1,54 @@
+$color-theme-labels: (
+    header: 4,
+    body: 1,
+    footer: 1,
+    base: 3,
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+);
+
+$color-theme-pallet: (
+    1: (
+        back: #FFB6B0,
+        fore: #000
+    ),
+    2: (
+        back: #E84E46,
+        fore: #000
+    ),
+    3: (
+        back: #FF0601,
+        fore: #000
+    ),
+    4: (
+        back: #E8AAAB,
+        fore: #000
+    ),
+    5: (
+        back: rgb(104, 5, 1),
+        fore: rgb(250, 5, 120)
+    )
+);
+
+@mixin setColorThemeLabels($map) {
+    $color-theme-labels: $map !global;
+}
+
+@mixin setColorThemePallet($map) {
+    $color-theme-pallet: $map !global;
+}
+
+@function color-theme-get($theme, $state) {
+    @return map-get(map-get($color-theme-pallet, map-get($color-theme-labels, $theme)), $state);
+}
+
+@function color-theme-fore($theme) {
+    @return color-theme-get($theme, fore);
+}
+
+@function color-theme-back($theme) {
+    @return color-theme-get($theme, back);
+}
