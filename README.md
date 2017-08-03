@@ -11,11 +11,31 @@ sass-themer-color/index.scss
 public/index.html
 
 ## test
+src/app/router/route/IndexComponent/index.scss
+
+```
 cd src/
 npm install
 npm run start
+```
 
 ## usage
+
+### theme mixins
+
+|name|mixin|
+|----|--------|
+| SetTheme | @include setColorThemePallet($map) |
+| SetLabels | @include setColorThemeLabels($map) |
+| SetThemeItem | @include setColorThemePalletItem($mapkey, $background, $foreground) |
+| SetLabelItem | @include setColorThemeLabelItem($labelname, $mapkey) |
+
+### theme functions
+
+|name|function|
+|----|--------|
+| GetForegroundColor | color-theme-fore($labelname) |
+| GetBackgroundColor | color-theme-back($labelname) |
 
 ### scheme functions
 

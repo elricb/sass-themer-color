@@ -33,12 +33,28 @@ $color-theme-pallet: (
     )
 );
 
+@mixin resetColorThemeLabels() {
+    $color-theme-labels: () !global;
+}
+
 @mixin setColorThemeLabels($map) {
     $color-theme-labels: $map !global;
 }
 
+@mixin setColorThemeLabelItem($name, $mapkey) {
+    $color-theme-labels: map-merge($color-theme-labels, ($name: $mapkey)) !global;
+}
+
+@mixin resetColorThemePallet() {
+    $color-theme-pallet: () !global;
+}
+
 @mixin setColorThemePallet($map) {
     $color-theme-pallet: $map !global;
+}
+
+@mixin setColorThemePalletItem($mapkey, $back, $fore) {
+    $color-theme-pallet: map-merge($color-theme-pallet, ($mapkey: (back: $back, fore: $fore))) !global;
 }
 
 @function color-theme-get($theme, $state) {
