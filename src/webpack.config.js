@@ -103,6 +103,7 @@ if (ENV === PRODUCTION) {
         resolve: {
             modules: [
                 PATH.app,
+                PATH.this,
                 PATH.node
             ],
             extensions: ['.js', '.jsx']

@@ -1,0 +1,19 @@
+{
+  "name": "@elricb/sass-themer-color",
+  "version": "1.0.0",
+  "description": "Color scheme theory functions for sass",
+  "main": "sass-themer-color/index.scss",
+  "scripts": {
+    "test": "src/npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elricdesigns/sass-themer-color.git"
+  },
+  "author": "elricb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elricdesigns/sass-themer-color/issues"
+  },
+  "homepage": "https://github.com/elricdesigns/sass-themer-color#readme"
+}
